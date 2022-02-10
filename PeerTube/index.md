@@ -286,9 +286,11 @@ PeerTube 的中文翻译也不是很完整，有时候有有时候没有。
 ## 参考资料
 
 [PeerTube Github](https://github.com/Chocobozzz/PeerTube/)
+
 [PeerTube Docs](https://docs.joinpeertube.org/)
 
 [荒岛 PeerTube v3：终于支持直播功能啦](https://lala.im/7688.html)
+
 [知乎 Xpitz PeerTube 安装教程：如何搭建视频分享平台](https://zhuanlan.zhihu.com/p/357738044)（想要用 Docker 装的可以参考此文）
 
 ## 结语
