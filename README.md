@@ -6,8 +6,8 @@
 
 Debian 相关
 
-[Debian 使用 Btrfs 文件系统实现快照和恢复](Debian/btrfs.md) （2024/1/11）
+[Debian 使用 Btrfs 文件系统实现快照和恢复](Debian/btrfs.md)（2024/1/11）
 
-[Debian 使用 libimobiledevice 实现苹果设备无线备份](Debian/libimobiledevice.md) （2024/1/11）
+[Debian 使用 libimobiledevice 实现苹果设备无线备份](Debian/libimobiledevice.md)（2024/1/11）
 
 文章版权所有，转载请注明作者。
