@@ -119,3 +119,9 @@ idevicebackup2 还有很多的的选项，具体可以参见官方文档。
 在备份文件夹中使用 `plistutil -p Status.plist` 来打印这个状态文件，来获得诸如备份时间之类的信息。
 
 定时备份可以创建 systemd timer 来实现，但要注意局域网备份只有在手机解锁的状态下才有效。锁屏的时候是找不到设备的。
+
+## 参考资料
+
+[Untether iOS – Step by Step](https://www.numerousnetworks.co.uk/guides/untether-ios-step-by-step/)
+
+[Raspberry PiでAltServerを動かす](https://jun3010.me/raspberrypi-altserver.html)
