@@ -111,7 +111,7 @@ UUID=0bd3d1d3-6814-4703-8796-c200c2f07552 /home btrfs rw,noatime,compress=zstd,s
 sudo apt install snapper
 ```
 
-为了防止啊 Snapper 自动创建的快照干扰我们工作，先给他处理掉。
+为了防止 Snapper 自动创建的快照干扰我们工作，先给他处理掉。
 
 ```
 cd /
