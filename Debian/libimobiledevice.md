@@ -1,6 +1,6 @@
 # Debian 使用 libimobiledevice 实现苹果设备无线备份
 
-我个人对 iCloud 是零信任的，所以自然也不会信任 iCloud 的设备备份。在 macOS 或 Windows 上我们可以使用 iMazing 来做备份，虽然这东西要钱。而在 Linux 上，我们可以使用 libimobiledevice 来备份。
+我个人对 iCloud 是零信任的，所以自然也不会信任 iCloud 的设备备份。在 macOS 或 Windows 上我们可以使用 iMazing 来做备份，虽然这东西要钱。而在 Linux 上，我们可以使用 libimobiledevice 来备份。这篇文章主要聚焦于无线备份，如不需要无线备份则可直接从 apt 安装 libimobiledevice 并参照下面的备份命令即可。
 
 但是 libimobiledevice 并不完美，在 Windows 和 macOS 上，它可以正常通过无线方式连接到设备，但在 Linux 上则不工作。其原因在于使用的 usbmuxd 不支持这一功能。于是有人从头重写开发了 usbmuxd2，可以直接替换 usbmuxd 使用。
 
