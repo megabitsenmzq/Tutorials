@@ -224,7 +224,7 @@ virt-manager --connect="qemu+ssh://USER@HOSTNAME/system?socket=/var/run/libvirt/
 
 ## 结论
 
-最后的结论就是。如果不是有什么大病，咱还是用 VMware 吧，折腾死了。用 [VMware Unlocker](https://github.com/theJaxon/unlocker) 可以解锁安装 macOS 的功能。
+最后的结论就是。如果不是有什么大病，咱还是用 VMware 吧，折腾死了，有这时间干点啥不好。用 [VMware Unlocker](https://github.com/theJaxon/unlocker) 可以解锁安装 macOS 的功能。
 
 ## 参考资料
 
