@@ -8,19 +8,19 @@
 
 因为 Debian 的包比较老，我们需要从头编译很多东西。总之先来装依赖吧。先安装编译套件。
 
-```
+```bash
 sudo apt-get install build-essential pkg-config checkinstall git autoconf automake libtool-bin clang
 ```
 
 再安装一些需要的包和头文件。
 
-```
+```bash
 usbmuxd avahi-utils libusbmuxd-dev libssl-dev libusb-1.0-0-dev libavahi-client-dev ibplist++-dev
 ```
 
 然后把这四个包的源代码下载下来。
 
-```
+```bash
 git clone https://github.com/libimobiledevice/libplist.git 
 git clone https://github.com/libimobiledevice/libimobiledevice-glue.git
 git clone https://github.com/tihmstar/libgeneral.git
@@ -31,7 +31,7 @@ git clone https://github.com/libimobiledevice/libimobiledevice.git
 
 之后依次进入文件夹编译
 
-```
+```bash
 ./autogen.sh 
 make 
 sudo make install
@@ -42,13 +42,13 @@ sudo ldconfig
 
 Avahi 是用来做局域网发现的，用它可以找到网络中的 bonjour 设备。
 
-```
+```bash
 sudo systemctl enable --now avahi-daemon.service
 ```
 
 按如下所示修改配置文件 `/etc/avahi/avahi-daemon.conf`。
 
-```
+```bash
 domain-name=local # 这一行去掉注释
 publish-hinfo=yes # 默认是 no
 publish-workstation=yes # 默认是 no
@@ -56,20 +56,20 @@ publish-workstation=yes # 默认是 no
 
 再重启服务。
 
-```
+```bash
 sudo systemctl restart avahi-daemon.service
 ```
 
 另外虽然说咱们都已经在用 ssh 登陆了，这方面应该没问题，不过还是注意下需要装 ssh 服务器。
 
-```
+```bash
 sudo apt-get install openssh-server 
 sudo systemctl enable --now ssh.service
 ```
 
 下面的命令可以显示当前网络中扫描到的设备：
 
-```
+```bash
 avahi-browse -a
 ```
 
@@ -77,7 +77,7 @@ avahi-browse -a
 
 这个作者写的代码只能用 clang 编，所以需要多一步。
 
-```
+```bash
 https://github.com/tihmstar/usbmuxd2.git
 ./autogen.sh 
 ./configure CC=clang CXX=clang++
@@ -88,7 +88,7 @@ sudo ldconfig
 
 启动服务。因为 usbmuxd 可能已经在运行了，所以 restart 一下让他刷新状态。
 
-```
+```bash
 sudo systemctl enable usbmuxd
 sudo systemctl restart usbmuxd
 ```
@@ -97,7 +97,7 @@ sudo systemctl restart usbmuxd
 
 先将 iOS 设备用 USB 线接到电脑上，在设备上输入密码信赖电脑。然后执行 `idevice_id` 查看设备列表，可能会看到这样的结果：
 
-```
+```bash
 00008030-000572092A30802E (USB)
 00008030-000572092A30802E (Network)
 ```
@@ -108,7 +108,7 @@ sudo systemctl restart usbmuxd
 
 备份的命令非常简单，如果只配对这一个设备，也可以不具体指定。我的命令中还指定了搜索网络设备。执行后就会立即开始备份。
 
-```
+```bash
 idevicebackup2 backup --full --network --udid 00008030-000572092A30802E backup_folder
 ```
 
