@@ -240,4 +240,36 @@ sudo systemctl enable grub-btrfsd
 
 以后再执行 `sudo update-grub` 的时候也会跟着把快照写进去。
 
+## 增加新的子分区
+
+有时候我们在安装完成之后还想增加新的子分区。比如说我们安装了 KVM 但不想要备份 KVM 的文件（因为太大了）。这时候该怎么办呢？
+
+首先创建一个新的文件夹用于挂载 btrfs 真正的 root，然后挂载。如果忘了是哪个盘的话，可以用 `df -h` 再确认一下。
+
+```
+sudo mkdir /mnt/btrfsroot
+sudo mount -o subvol=/ /dev/nvme0n1p3 /mnt/btrfsroot/
+```
+
+接下来创建新的子分区，然后解除挂载。
+
+```
+cd /mnt/btrfsroot
+sudo btrfs su cr @images
+cd ..
+sudo umount btrfsroot
+```
+
+和之前一样编辑 `/target/etc/fstab` 在其中添加新子分区的信息。
+
+```
+UUID=0bd3d1d3-6814-4703-8796-c200c2f07552 /var/lib/libvirt/images btrfs rw,noatime,compress=zstd,subvol=@images 0 0
+```
+
+最后重新挂载所有分区就完成了。
+
+```
+sudo mount -av
+```
+
 以上就是我最近研究 Btrfs 快照的一些经验了，希望能对你有所帮助。
