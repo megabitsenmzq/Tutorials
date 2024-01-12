@@ -246,14 +246,14 @@ sudo systemctl enable grub-btrfsd
 
 首先创建一个新的文件夹用于挂载 btrfs 真正的 root，然后挂载。如果忘了是哪个盘的话，可以用 `df -h` 再确认一下。
 
-```
+```bash
 sudo mkdir /mnt/btrfsroot
 sudo mount -o subvol=/ /dev/nvme0n1p3 /mnt/btrfsroot/
 ```
 
 接下来创建新的子分区，然后解除挂载。
 
-```
+```bash
 cd /mnt/btrfsroot
 sudo btrfs su cr @images
 cd ..
@@ -262,13 +262,13 @@ sudo umount btrfsroot
 
 和之前一样编辑 `/target/etc/fstab` 在其中添加新子分区的信息。
 
-```
+```bash
 UUID=0bd3d1d3-6814-4703-8796-c200c2f07552 /var/lib/libvirt/images btrfs rw,noatime,compress=zstd,subvol=@images 0 0
 ```
 
 最后重新挂载所有分区就完成了。
 
-```
+```bash
 sudo mount -av
 ```
 
