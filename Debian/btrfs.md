@@ -21,7 +21,7 @@
 
 首先用 `df -h` 查看一下现在挂载的磁盘。你会看到类似下面的列表：
 
-```
+```bash
 Filesystem      Size  Used Avail Use% Mounted on
 ...
 /dev/nvme0n1p3  231G   62G  168G  27% /target
@@ -32,7 +32,7 @@ Filesystem      Size  Used Avail Use% Mounted on
 
 为了对其进行修改，我们要先把子分区都卸载，然后把整个分区的根挂载出来。
 
-```
+```bash
 umount /target/boot/efi
 umount /target
 mount /dev/nvme0n1p3 /mnt 
@@ -40,31 +40,31 @@ mount /dev/nvme0n1p3 /mnt
 
 这时如果我们来看 `/mnt` 的内容，就会看到一个：
 
-```
+```bash
 @rootfs
 ```
 
 这个 `@rootfs` 就是我们的各种麻烦事的万恶之源了。我们将它重命名为 `@`。
 
-```
+```bash
 mv @rootfs @
 ``` 
 
 接下来创建一个专门用于存放 Snapper 快照的子分区。
 
-```
+```bash
 btrfs subvolume create @snapshots
 ```
 
 也可以简写为
 
-```
+```bash
 btrfs su cr @snapshots
 ```
 
 你也可以创建一些其他你想要分别管理的子分区。不过越多一会越麻烦。
 
-```
+```bash
 btrfs su cr @home
 btrfs su cr @log
 btrfs su cr @cache
@@ -76,7 +76,7 @@ btrfs su cr @spool
 
 接下来我们要把刚刚创建的子分区一个一个挂载上。注意这里 efi 在不同的分区上，`@snapshots` 要挂载到 `.snapshots` 文件夹上。
 
-```
+```bash
 mount /dev/nvme0n1p1 /target/boot/efi
 mount -o rw,noatime,compress=zstd,subvol=@ /dev/nvme0n1p3 /target
 mount -o rw,noatime,compress=zstd,subvol=@snapshots /dev/nvme0n1p3 /target/.snapshots
@@ -88,13 +88,13 @@ mount -o rw,noatime,compress=zstd,subvol=@home /dev/nvme0n1p3 /target/home
 
 在文件的上方，我们会找到这样一行：
 
-```
+```bash
 UUID=0bd3d1d3-6814-4703-8796-c200c2f07552 / btrfs subvol=@rootfs 0 0
 ```
 
 我们要把这一行的参数修改成我们刚刚挂载使用的参数，之后有多少子分区就写多少行。
 
-```
+```bash
 UUID=0bd3d1d3-6814-4703-8796-c200c2f07552 / btrfs rw,noatime,compress=zstd,subvol=@ 0 0
 UUID=0bd3d1d3-6814-4703-8796-c200c2f07552 /.snapshots btrfs rw,noatime,compress=zstd,subvol=@snapshots 0 0
 UUID=0bd3d1d3-6814-4703-8796-c200c2f07552 /home btrfs rw,noatime,compress=zstd,subvol=@home 0 0
@@ -107,13 +107,13 @@ UUID=0bd3d1d3-6814-4703-8796-c200c2f07552 /home btrfs rw,noatime,compress=zstd,s
 
 首先安装 Snapper。
 
-```
+```bash
 sudo apt install snapper
 ```
 
 为了防止 Snapper 自动创建的快照干扰我们工作，先给他处理掉。
 
-```
+```bash
 cd /
 sudo umount .snapshots
 sudo rm -r .snapshots
@@ -121,13 +121,13 @@ sudo rm -r .snapshots
 
 接下来让 Snapper 接管根目录。注意这里的根是指子分区中的 @，不是磁盘上真正的根。
 
-```
+```bash
 sudo snapper -c root create-config /
 ```
 
 然后我们来做一些配置，大家可以按需调整。
 
-```
+```bash
 sudo systemctl disable snapper-boot.timer # 禁用开机快照
 sudo snapper -c root set-config 'TIMELINE_CREATE=no' # 禁用定时快照（可选）
 sudo nano /etc/snapper/configs/root # 可以调整定时快照的选项
@@ -139,14 +139,14 @@ sudo nano /etc/apt/apt.conf.d/80snapper # 调整是否在 apt 执行时快照
 
 接下来你可以继续让 Snapper 接管每一个子分区。
 
-```
+```bash
 sudo snapper -c root create-config /home
 ···
 ```
 
 最后再重新把保存快照的子分区挂载上。
 
-```
+```bash
 sudo btrfs su del /.snapshots
 sudo mkdir .snapshots
 sudo mount -av
@@ -158,13 +158,13 @@ sudo mount -av
 
 创建快照非常简单。如果你的系统中只有一个 `@` 子分区需要管理，`-c root` 还可以省略。
 
-```
+```bash
 sudo snapper --config root create --description "Aha!"
 ```
 
 或简写为：
 
-```
+```bash
 sudo snapper -c root cr -d "Aha!"
 ```
 
@@ -178,7 +178,7 @@ sudo snapper -c root cr -d "Aha!"
 
 删除快照也十分简单。
 
-```
+```bash
 sudo snapper -c root del 0
 ```
 
@@ -188,7 +188,7 @@ sudo snapper -c root del 0
 
 虽然我们可以直接使用 Snapper 恢复快照，但这个过程一点都不让人省心。与其说是帮你恢复快照，Snapper 不如说是给你创建了一个目标快照的可读写副本，至于进入快照还有把那个副本替换成真的快照之类的麻烦事就得自己干了。所以我们需要使用一个脚本。
 
-```
+```bash
 sudo apt install python3-btrfsutil
 git clone 'https://github.com/jrabinow/snapper-rollback.git'
 cd snapper-rollback
@@ -198,25 +198,25 @@ sudo cp snapper-rollback.conf /etc/
 
 然后我们需要编辑一下配置文件。
 
-```
+```bash
 sudo nano /etc/snapper-rollback.conf
 ```
 
 把最后面这一行取消注释，改成你硬盘的分区。
 
-```
+```bash
 dev = /dev/nvme0n1p3
 ```
 
 之后就可以用它来回档了。执行完成后重启系统。
 
-```
+```bash
 sudo snapper-rollback <ID>
 ```
 
 在完成回档之后，还会产生一个备份用的子分区。如果不删除还会一直占用空间。可以用以下的方式删除，那些备份用的分区名字很好认。
 
-```
+```bash
 sudo mount -o subvolid=0 /dev/nvme0n1p3 /mnt
 cd /mnt
 sudo btrfs subvolume delete <name>
@@ -230,7 +230,7 @@ sudo umount /mnt
 
 有时候我们会遇到系统都进不去的情况，为了防患于未然，我们还需要其他工具。安装 grub-btrfs 就可以在 GRUB 中显示当前系统中的所有快照。因为 Debian 中没有这个包，所以需要自己编译安装。
 
-```
+```bash
 git clone https://github.com/Antynea/grub-btrfs.git
 cd grub-btrfs
 sudo make install
