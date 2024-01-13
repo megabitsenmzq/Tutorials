@@ -122,6 +122,6 @@ idevicebackup2 还有很多的的选项，具体可以参见官方文档。
 
 ## 参考资料
 
-[Untether iOS – Step by Step](https://www.numerousnetworks.co.uk/guides/untether-ios-step-by-step/)
+[Untether iOS – Step by Step - Numerous Networks](https://www.numerousnetworks.co.uk/guides/untether-ios-step-by-step/)
 
-[Raspberry PiでAltServerを動かす](https://jun3010.me/raspberrypi-altserver.html)
+[Raspberry PiでAltServerを動かす - さおとめらいふ](https://jun3010.me/raspberrypi-altserver.html)
