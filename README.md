@@ -10,4 +10,6 @@ Debian 相关
 
 [Debian 使用 libimobiledevice 实现苹果设备无线备份](Debian/libimobiledevice.md)（2024/1/11）
 
+[Debian 安装 macOS Sonoma KVM 虚拟机](Debian/osx-kvm.md) (2024/1/12)
+
 文章版权所有，转载请注明作者。
