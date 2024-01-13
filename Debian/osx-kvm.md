@@ -212,15 +212,21 @@ brew tap jeffreywildman/homebrew-virt-manager
 brew install virt-manager virt-viewer
 ```
 
-之后就可以通过下面的命令来管理虚拟机了。
+之后就可以通过下面的命令来管理虚拟机了。注意 no-fork 参数不加会崩溃。
 
 ```bash
-virt-manager --connect="qemu+ssh://USER@HOSTNAME/system?socket=/var/run/libvirt/libvirt-sock"
+virt-manager --connect="qemu+ssh://USER@HOSTNAME/system?socket=/var/run/libvirt/libvirt-sock" --no-fork
 ```
 
 但是如果你只做了上面这些事，你会发现一个问题就是远程桌面打不开。这是因为远程桌面默认不接受外部访问。所以我们需要编辑虚拟机，在左侧列表中选择 Display Spice，然后在右侧将 Address 改为 All Interfaces。这样应该就可以打开了。
 
 但是还有另外一个问题，Spice 从局域网走的话很慢，不如 VNC。所以我们可以进入 XML 编辑界面，将所有与 Spice 相关的东西全部删除，注意只要有一样 Spice 的东西还留着，就没办法保存修改，就会报错。全删除之后在左侧列表里重新添加 VNC 类型的 Display 就可以了。别忘了改 All Interface。
+
+以后再执行的时候就可以省略连接命令，直接在 GUI 里连接就好。
+
+```bash
+virt-manager --no-fork
+```
 
 ## 结论
 
