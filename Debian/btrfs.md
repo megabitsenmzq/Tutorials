@@ -273,3 +273,9 @@ sudo mount -av
 ```
 
 以上就是我最近研究 Btrfs 快照的一些经验了，希望能对你有所帮助。
+
+## 参考资料
+
+[Installing Debian with BTRFS, Snapper backups and GRUB-BTRFS - A. Nagatani 永谷](https://freedium.cfd/https://medium.com/@inatagan/installing-debian-with-btrfs-snapper-backups-and-grub-btrfs-27212644175f)
+
+[Debian 12: Fighting with OpenSUSE Snapper! - Stephen's Tech Talks](https://www.youtube.com/watch?v=b4vTKg-qW_0)
