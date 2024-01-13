@@ -234,10 +234,10 @@ virt-manager --no-fork
 
 ## 参考资料
 
-[OSX-KVM](https://github.com/kholia/OSX-KVM/blob/master/notes.md)
+[OSX-KVM - GitHub](https://github.com/kholia/OSX-KVM/blob/master/notes.md)
 
-[How to install KVM server on Debian 9/10 Headless Server](https://www.cyberciti.biz/faq/install-kvm-server-debian-linux-9-headless-server/)
+[How to install KVM server on Debian 9/10 Headless Server - Nix Craft](https://www.cyberciti.biz/faq/install-kvm-server-debian-linux-9-headless-server/)
 
-[Share Folder Between Windows Guest and Linux Host in KVM using virtiofs](https://www.debugpoint.com/kvm-share-folder-windows-guest/)
+[Share Folder Between Windows Guest and Linux Host in KVM using virtiofs - Debug Point](https://www.debugpoint.com/kvm-share-folder-windows-guest/)
 
-[Remote virt-manager from Mac OS](https://gist.github.com/davesilva/da709c6f6862d5e43ae9a86278f79188)
+[Remote virt-manager from Mac OS - Gist](https://gist.github.com/davesilva/da709c6f6862d5e43ae9a86278f79188)
