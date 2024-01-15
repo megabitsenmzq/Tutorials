@@ -12,4 +12,6 @@ Debian 相关
 
 [Debian 安装 macOS Sonoma KVM 虚拟机](Debian/osx-kvm.md) (2024/1/12)
 
+[在 Debian 上使用 Mac mini 的红外接收器控制 CD 播放](Debian/cd-player.md)
+
 文章版权所有，转载请注明作者。
