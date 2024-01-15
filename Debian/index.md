@@ -18,7 +18,7 @@
 
 因为是做服务器平时不会碰，所以我完全没有安装图形环境。就是纯命令行的非常干净的 Debian。之所以选择 Debian 一方面是我对 Debian 系比较熟悉，我的主力 Linux 电脑也是 Debian。另外也是出了问题教程好找，就算找不到 Debian 的，Ubuntu 的也能凑活用。剩下就没什么特别大的原因了。
 
-安装时候配置了用了 Btrfs，参见文章：[Debian 使用 Btrfs 文件系统实现快照和恢复](https://github.com/megabitsenmzq/Tutorials/blob/master/Debian/btrfs.md)。
+安装时候配置了用了 Btrfs，参见文章：[Debian 使用 Btrfs 文件系统实现快照和恢复](btrfs.md)。
 
 我将 HDD 挂载到了 `/mnt/Documents` 也是 Btrfs。
 
