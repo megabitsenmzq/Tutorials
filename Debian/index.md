@@ -200,6 +200,14 @@ path = /mnt/Documents/Files
 
 因为电脑上插了一个光驱，我还配置了 CD 播放器，可以用苹果的遥控器遥控，过程参见文章：[在 Debian 上使用 Mac mini 的红外接收器控制 CD 播放](cd-player.md)。
 
+## Cockpit
+
+[Cockpit](https://cockpit-project.org) 是一个 RedHat 做的轻量服务器管理面板。基本上照着官网的装就可以了。我多装了两个插件。
+
+```bash
+sudo apt install cockpit-pcp cockpit-machines
+```
+
 ## 总结
 
 整个过程我折腾了一周左右，正好赶上元旦放假。虽然花了很多时间，但过程中也学到了很多东西，我对 Linux 系统的认识又进了一步。很多以前靠我自己可能解决不了的东西这次也能在不 Google 的前提下依靠自己的经验解决了。总的来说还是很顺利的，没碰到特别大的坑。
