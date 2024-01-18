@@ -36,7 +36,7 @@ sudo apt install broadcom-sta-dkms network-manager
 
 [File Browser](https://filebrowser.org) 是一个轻量的文件管理 Web UI，功能刚好够用，我非常推荐。可以直接装也可以在 Docker 里装。需要的朋友可以自己去官网看看。
 
-因为要让这个东西开机启动，要写一个 systemd 服务。一般都放在 `/etc/systemd/system/` 中。内容如下：
+因为要让这个东西开机启动，要写一个 systemd 服务。服务一般都放在 `/etc/systemd/system/` 中。注意这里要写好用户，因为我们不希望有人用 root 权限乱改东西，也不希望以 root 权限创建文件别的程序无法访问。
 
 ```bash
 [Unit]
@@ -44,6 +44,8 @@ Description=File Browser Service
 After=network.target
 
 [Service]
+User=user
+Group=group
 Type=simple
 Restart=on-failure
 RestartSec=5s
