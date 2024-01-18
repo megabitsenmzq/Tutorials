@@ -73,6 +73,12 @@ sudo systemctl enable --now ssh.service
 avahi-browse -a
 ```
 
+然后这里还要删除一个不太需要的后台服务，它会一直在系统日志里报错，很烦。
+
+```bash
+sudo apt remove --purge avahi-autoipd
+```
+
 ## 编译 usbmuxd2
 
 这个作者写的代码只能用 clang 编，所以需要多一步。
