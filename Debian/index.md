@@ -208,6 +208,27 @@ path = /mnt/Documents/Files
 sudo apt install cockpit-pcp cockpit-machines
 ```
 
+## Caddy
+
+接下来安装了 [Caddy](https://caddyserver.com) 用来改善 WebUI 的体验，顺便跑 [AriaNG](https://github.com/mayswind/AriaNg)。
+
+我这里踩了一个坑，就是 Caddy 的静态服务器似乎无论如何都读不到用户目录的文件。即便我确认了文件的访问权限是没有问题的。最后我在 `/etc/caddy` 中创建了一个 `www` 文件夹，把东西放在里面。
+
+我的 Caddyfile 大致内容如下：
+
+```bash
+:8003 {
+	root * /etc/caddy/www
+	log
+	encode gzip
+	file_server browse
+}
+
+:80 {
+	redir https://{host}{uri} permanent
+}
+```
+
 ## 总结
 
 整个过程我折腾了一周左右，正好赶上元旦放假。虽然花了很多时间，但过程中也学到了很多东西，我对 Linux 系统的认识又进了一步。很多以前靠我自己可能解决不了的东西这次也能在不 Google 的前提下依靠自己的经验解决了。总的来说还是很顺利的，没碰到特别大的坑。
