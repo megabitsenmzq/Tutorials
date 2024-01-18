@@ -231,6 +231,7 @@ sudo umount /mnt
 有时候我们会遇到系统都进不去的情况，为了防患于未然，我们还需要其他工具。安装 grub-btrfs 就可以在 GRUB 中显示当前系统中的所有快照。因为 Debian 中没有这个包，所以需要自己编译安装。
 
 ```bash
+sudo apt install inotify-tools
 git clone https://github.com/Antynea/grub-btrfs.git
 cd grub-btrfs
 sudo make install
