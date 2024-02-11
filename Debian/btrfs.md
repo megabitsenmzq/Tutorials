@@ -90,6 +90,7 @@ mkdir /target/.snapshots
 mount -o rw,noatime,compress=zstd,subvol=@snapshots /dev/nvme0n1p3 /target/.snapshots
 mount -o rw,noatime,compress=zstd,subvol=@home /dev/nvme0n1p3 /target/home
 ...
+mount /dev/nvme0n1p2 /target/boot # 也许会有
 mount /dev/nvme0n1p1 /target/boot/efi
 ```
 
