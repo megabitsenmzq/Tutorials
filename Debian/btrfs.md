@@ -28,9 +28,9 @@ Filesystem      Size  Used Avail Use% Mounted on
 /dev/nvme0n1p1  285M  5.9M  279M   3% /target/boot/efi
 ```
 
-这其中我们可以看到 Debian 安装程序将目标磁盘挂载到了 `/target` 下。我这里没有使用加密，如果使用了加密分区还有 KVM 之类的，则左侧的 `/dev/nvme0n1p3` 会变成 `/dev/mapper/VG0-LV0` 之类的东西。
+这其中我们可以看到 Debian 安装程序将目标磁盘挂载到了 `/target` 下。我这里没有使用加密，如果使用了加密分区还有 KVM 之类的，则左侧的 `/dev/nvme0n1p3` 会变成 `/dev/mapper/VolumeGroupName-LogicVolumeName` 之类的东西。将这个列表记住，可以用手机拍个照之类的。
 
-为了对其进行修改，我们要先把子分区都卸载，然后把整个分区的根挂载出来。
+为了对其进行修改，我们要先把子分区一层一层地卸载，然后把整个分区的根挂载出来。我这里没有加密，如果你有加密的话，`boot` 分区会在加密分区的外部，也同样需要单独卸载。
 
 ```bash
 umount /target/boot/efi
@@ -86,6 +86,7 @@ umount /mnt
 
 ```bash
 mount -o rw,noatime,compress=zstd,subvol=@ /dev/nvme0n1p3 /target
+mkdir /target/.snapshots
 mount -o rw,noatime,compress=zstd,subvol=@snapshots /dev/nvme0n1p3 /target/.snapshots
 mount -o rw,noatime,compress=zstd,subvol=@home /dev/nvme0n1p3 /target/home
 ...
