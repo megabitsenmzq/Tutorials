@@ -76,12 +76,14 @@ btrfs su cr @spool
 
 接下来我们要把刚刚创建的子分区一个一个挂载上。注意这里 efi 在不同的分区上，`@snapshots` 要挂载到 `.snapshots` 文件夹上。在那之前不要忘了用 `mkdir` 创建这些目标文件夹。
 
+有一点很需要注意的是顺序，要先 mount 外层的目录，mount 完后再创建内层的目录再 mount，否则可能会产生一些非预期的行为。
+
 ```bash
-mount /dev/nvme0n1p1 /target/boot/efi
 mount -o rw,noatime,compress=zstd,subvol=@ /dev/nvme0n1p3 /target
 mount -o rw,noatime,compress=zstd,subvol=@snapshots /dev/nvme0n1p3 /target/.snapshots
 mount -o rw,noatime,compress=zstd,subvol=@home /dev/nvme0n1p3 /target/home
 ...
+mount /dev/nvme0n1p1 /target/boot/efi
 ```
 
 之后我们还要修改 `/target/etc/fstab` 来让系统记住这些子分区。
