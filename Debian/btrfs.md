@@ -175,7 +175,7 @@ sudo snapper --config root create --description "Aha!"
 或简写为：
 
 ```bash
-sudo snapper -c root cr -d "Aha!"
+sudo snapper -c root create -d "Aha!"
 ```
 
 来看看我们创建的快照。
