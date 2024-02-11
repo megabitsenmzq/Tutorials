@@ -180,6 +180,10 @@ sudo snapper -c root cr -d "Aha!"
 
 来看看我们创建的快照。
 
+```bash
+sudo snapper list
+```
+
 ```
   # | Type   | Pre # | Date                     | User     | Cleanup | Description | Userdata
 ----+--------+-------+--------------------------+----------+---------+----------------------+---------
