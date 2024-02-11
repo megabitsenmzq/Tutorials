@@ -74,7 +74,7 @@ btrfs su cr @spool
 ...
 ```
 
-接下来我们要把刚刚创建的子分区一个一个挂载上。注意这里 efi 在不同的分区上，`@snapshots` 要挂载到 `.snapshots` 文件夹上。
+接下来我们要把刚刚创建的子分区一个一个挂载上。注意这里 efi 在不同的分区上，`@snapshots` 要挂载到 `.snapshots` 文件夹上。在那之前不要忘了用 `mkdir` 创建这些目标文件夹。
 
 ```bash
 mount /dev/nvme0n1p1 /target/boot/efi
