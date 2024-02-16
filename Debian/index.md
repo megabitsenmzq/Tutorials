@@ -212,7 +212,7 @@ sudo apt install cockpit-pcp cockpit-machines
 
 ## Aria2
 
-这里的配置大同小异，大家可以直接参照文件：【正在创建】
+这里的配置大同小异，大家可以直接参照文件夹: [aria2](https://github.com/megabitsenmzq/Tutorials/tree/master/Debian/aria2)。
 
 ## Caddy
 
