@@ -210,6 +210,10 @@ path = /mnt/Documents/Files
 sudo apt install cockpit-pcp cockpit-machines
 ```
 
+## Aria2
+
+这里的配置大同小异，大家可以直接参照文件：【正在创建】
+
 ## Caddy
 
 接下来安装了 [Caddy](https://caddyserver.com) 用来改善 WebUI 的体验，顺便跑 [AriaNG](https://github.com/mayswind/AriaNg)。
