@@ -1,0 +1,5 @@
+[Unit]
+Description = "Monthly Clear Archive"
+
+[Service]
+ExecStart = /home/megabits/scripts/monthly_clearArchive.sh

@@ -1,0 +1,8 @@
+[Unit]
+Description=Run every month
+
+[Timer]
+OnCalendar=*-*-1 05:00:00
+
+[Install]
+WantedBy=timers.target

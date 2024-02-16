@@ -1,0 +1,4 @@
+[Unit]
+Description=Daily Archive
+[Service]
+ExecStart=/home/megabits/scripts/daily_archive.sh
