@@ -1,0 +1,15 @@
+[Unit]
+Description = aria2c
+After = network.target
+StartLimitIntervalSec = 30
+StartLimitBurst = 2
+
+[Service]
+User=megabits
+Type = simple
+ExecStart = /usr/bin/aria2c --conf-path=/home/megabits/.aria2/aria2.conf
+Restart = on-failure
+RestartSec = 10s
+
+[Install]
+WantedBy = multi-user.target
