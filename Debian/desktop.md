@@ -13,6 +13,9 @@
 - ibus-rime：中文输入法，同时安装东风破(plum)和雾凇拼音方案。
 - ibus-mozc：日语输入法。
 - gnome-shell-extension-manager：Gnome 插件管理器。
+- vlc：路障。
+- ghex：HEX 编辑器。
+- meld：文件对比工具。
 
 ## Gnome 插件
 
