@@ -6,6 +6,8 @@
 
 参见：[State of Linux on the MacBook Pro 2016 & 2017](https://github.com/Dunedan/mbp-2016-linux)。
 
+不过主要来讲就是一个[声卡](https://github.com/davidjo/snd_hda_macbookpro)，一个[蓝牙](https://github.com/leifliddy/macbook12-bluetooth-driver)。声卡半残，休眠就废。蓝牙倒是没什么大问题。
+
 ## 软件包
 
 - flatpak：不用多说，安装参见[官网说明](https://flatpak.org/setup/Debian)。
