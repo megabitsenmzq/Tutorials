@@ -18,6 +18,7 @@
 - vlc：路障。
 - ghex：HEX 编辑器。
 - meld：文件对比工具。
+- gear-lever：App Image 管理工具。
 
 ## Gnome 插件
 
