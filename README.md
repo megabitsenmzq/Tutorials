@@ -14,4 +14,6 @@ Debian 相关
 
 [在 Debian 上使用 Mac mini 的红外接收器控制 CD 播放](Debian/cd-player.md)
 
+[桌面环境备忘录](Debian/desktop.md)
+
 文章版权所有，转载请注明作者。
