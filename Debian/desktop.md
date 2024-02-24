@@ -23,19 +23,12 @@
 ## Gnome 插件
 
 - Clipboard Indicator：剪贴板管理器。
-
 - Dash to Dock：快捷启动当 Dock 用。
-
 - Blur my Shell：各种界面模糊。
-
 - AppIndicator and KStatusNotifierItem Support：传统通知图标支持。
-
 - Just Perfection：界面微调。
-
 - Burn My Windows：窗口开关特效。
-
 - Focused Window D-Bus：给其他程序提供接口。
-
 - TailScale-QS：TailScale 开关。
 
 ## 美化
@@ -45,6 +38,21 @@
 ## 防精分
 
 [Toshy](https://github.com/RedBearAK/toshy): 在 Linux 上使用 macOS 的快捷键。
+
+### 输入法
+
+虽然说 Rime 装雾凇拼音就可以了（按 F4 切换方案）。不过因为 macOS 的使用习惯现在是 CapsLock 切中英文，所以这边也要统一一下。
+
+打开 Rime 的设置，应该在 `~/.config/ibus/rime/default.yaml`。找到切换的部分，改成下面这样就可以了。
+
+```bash
+ascii_composer:
+  good_old_caps_lock: false # 这里改成 false
+  switch_key:
+    Caps_Lock: commit_code # 这里改成 commit_code
+    Shift_L: noop # 这里改成 noop
+    ... 
+```
 
 ### 修改手势
 
