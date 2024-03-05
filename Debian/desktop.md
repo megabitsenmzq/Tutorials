@@ -19,6 +19,13 @@
 - ghex：HEX 编辑器。
 - meld：文件对比工具。
 - gear-lever：App Image 管理工具。
+- default-jdk：咖啡冒热气。
+- wireshark：脆脆鲨。
+
+  ```bash
+  sudo usermod -a -G wireshark $(whoami)
+  sudo chmod +x /usr/bin/dumpcap
+  ```
 
 ## Gnome 插件
 
