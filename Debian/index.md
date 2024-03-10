@@ -121,9 +121,9 @@ sudo systemctl start --now strelaysrv
 sudo systemctl status strelaysrv
 ```
 
-在日志中可以看到访问的 URI。在所有参数最后添加 Token 即可。
+在日志中可以看到访问的 URI。在所有参数最后添加 Token 即可填入设置，替换 ListenAddress 默认的 default。
 
-```bash
+```
 relay://0.0.0.0:22067/?id=AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-
 AAAAAAA-AAAAAAA&networkTimeout=2m0s&pingInterval=1m0s&statusAddr=%3A22070&token=myToken
 ```
