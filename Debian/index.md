@@ -122,12 +122,14 @@ sudo systemctl start --now strelaysrv
 sudo systemctl status strelaysrv
 ```
 
-在日志中可以看到访问的 URI。在所有参数最后添加 Token 即可填入设置，替换 ListenAddress 默认的 default。
+在日志中可以看到访问的 URI。在所有参数最后添加 Token 即可填入设置, 加上两个本地连接，替换 ListenAddress 默认的 default。
 
 ```
 relay://0.0.0.0:22067/?id=AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-
-AAAAAAA-AAAAAAA&networkTimeout=2m0s&pingInterval=1m0s&statusAddr=%3A22070&token=myToken
+AAAAAAA-AAAAAAA&networkTimeout=2m0s&pingInterval=1m0s&statusAddr=%3A22070&token=myToken, quic://0.0.0.0:22000, tcp://0.0.0.0:22000
 ```
+
+有条件还可以自建发现服务器。不过发现服务器不是太影响传输速度，在乎隐私的朋友可以考虑。
 
 ## 自动备份
 
@@ -135,7 +137,7 @@ AAAAAAA-AAAAAAA&networkTimeout=2m0s&pingInterval=1m0s&statusAddr=%3A22070&token=
 
 我在 Oracle Cloud 有注册一个免费的 VPS，并配置了 100GB 的存储块。比较有趣的是，如果我想在 Oracle Cloud 上获得同样容量的对象存储需要花钱，存储块却不用。
 
-于是我在 VPS 中也安装了 Resilio Sync，然后用一个备份专用的文件夹加密同步。再通过计划任务将需要备份的文件打包存入这个文件夹。即实现了一个虽然原始但十分有效的备份逻辑。脚本如下：
+于是我在 VPS 中也安装了 Syncthing，然后用一个备份专用的文件夹加密同步。再通过计划任务将需要备份的文件打包存入这个文件夹。即实现了一个虽然原始但十分有效的备份逻辑。脚本如下：
 
 ```bash
 #!/bin/bash
