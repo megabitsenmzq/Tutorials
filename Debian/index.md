@@ -101,6 +101,33 @@ sudo systemctl enable --now tailscaled
 sudo systemctl enable --now syncthing@$(whoami)
 ```
 
+此外因为 Syncthing 是开源软件，公共节点都是志愿者提供的，所以在穿透内网的情况下速度较慢，可以自己搭建中继。
+
+安装方法和前面一样从官方源安装。
+
+```bash
+sudo apt install syncthing-relaysrv
+```
+
+之后先编辑 `/etc/default/syncthing-relaysrv` 添加 token 参参数, 关闭内网发现，然后再启动服务。
+
+```bash
+NAT=false
+RELAYSRV_OPTS=-token=myToken
+```
+
+```bash
+sudo systemctl start --now strelaysrv
+sudo systemctl status strelaysrv
+```
+
+在日志中可以看到访问的 URI。在所有参数最后添加 Token 即可。
+
+```bash
+relay://0.0.0.0:22067/?id=AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-
+AAAAAAA-AAAAAAA&networkTimeout=2m0s&pingInterval=1m0s&statusAddr=%3A22070&token=myToken
+```
+
 ## 自动备份
 
 对于同步的重要文件，我还会对其进行定期云备份。
