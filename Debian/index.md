@@ -91,11 +91,15 @@ WantedBy=multi-user.target
 sudo systemctl enable --now tailscaled
 ```
 
-## Resilio Sync
+## Syncthing
 
-[Resilio Sync](https://help.resilio.com/hc/en-us/articles/206178924-Installing-Sync-package-on-Linux) 这是一个同步文件的工具。我用它来实现类似云盘的同步功能，配合 File Browser，我的 Mac mini 可以完全替代云盘。
+[Syncthing](https://syncthing.net) 是一个同步文件的工具。我用它来实现类似云盘的同步功能，配合 File Browser，我的 Mac mini 可以完全替代云盘。
 
-其安装直接按照教程即可。安装完成后可以通过 8888 端口访问。需要注意的是，要将文件夹设置为 g+rw 才可被其访问。
+安装完成后以用户态启动服务，之后可以通过 8384 端口访问 WebUI。
+
+```bash
+sudo systemctl enable --now syncthing@$(whoami)
+```
 
 ## 自动备份
 
@@ -146,7 +150,7 @@ Description=Daily Archive
 ExecStart=/home/megabits/scripts/daily_archive.sh
 ```
 
-这里可以看到这个脚本会在每天凌晨五点执行。之后一样在 systemctl 中启用可以了。
+这里可以看到这个脚本会在每天凌晨五点执行。之后一样在 systemctl 中启用可以了。注意启用时只要启用 timer 即可，不必对 service 进行操作。
 
 ## 自动手机备份
 
