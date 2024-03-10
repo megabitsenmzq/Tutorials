@@ -124,7 +124,7 @@ fi
 
 这里做了三件事，一个是用 tar 打包保存，保存时排除了 Resilio Sync 的索引文件。之后设置权限确保 Resilio Sync 可以读。最后再检查文件夹中超过一周的文件并删除。我只保留最近一周的备份。
 
-脚本写完后用 systemd timer 触发。首先是 timer 文件：
+脚本写完后用 systemd timer 触发。一样放在 `/etc/systemd/system/` 中首先是 timer 文件：
 
 ```bash
 [Unit]
