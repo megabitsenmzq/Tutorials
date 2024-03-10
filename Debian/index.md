@@ -129,7 +129,7 @@ relay://0.0.0.0:22067/?id=AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-
 AAAAAAA-AAAAAAA&networkTimeout=2m0s&pingInterval=1m0s&statusAddr=%3A22070&token=myToken, quic://0.0.0.0:22000, tcp://0.0.0.0:22000
 ```
 
-有条件还可以自建发现服务器。不过发现服务器不是太影响传输速度，在乎隐私的朋友可以考虑。
+有条件还可以自建发现服务器。不过发现服务器不是太影响传输速度，在乎隐私的朋友可以考虑。共享文件时常见的过滤规则可以参见这个 [Gist](https://gist.github.com/marksharrison/ec7646f9539a770f2e86b53c7fc7d309)。
 
 ## 自动备份
 
