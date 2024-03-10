@@ -110,7 +110,7 @@ syncthing --paths // 找到配置文件。
 sudo apt install syncthing-relaysrv
 ```
 
-之后先编辑 `/etc/default/syncthing-relaysrv` 添加 token 参参数, 关闭内网发现，然后再启动服务。
+之后先编辑 `/etc/default/syncthing-relaysrv` 添加 token 参参数，关闭内网发现，然后再启动服务。
 
 ```bash
 NAT=false
