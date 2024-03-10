@@ -93,7 +93,7 @@ sudo systemctl enable --now tailscaled
 
 ## Syncthing
 
-[Syncthing](https://syncthing.net) 是一个同步文件的工具。我用它来实现类似云盘的同步功能，配合 File Browser，我的 Mac mini 可以完全替代云盘。
+[Syncthing](https://syncthing.net) 是一个同步文件的工具。我用它来实现类似云盘的同步功能，配合 File Browser，我的 Mac mini 可以完全替代云盘。因为 Debian 自带的版本比较老，建议按照[说明](https://apt.syncthing.net)添加官方源。
 
 安装完成后以用户态启动服务，之后可以通过 8384 端口访问 WebUI。
 
