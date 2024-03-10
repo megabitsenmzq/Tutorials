@@ -99,6 +99,7 @@ sudo systemctl enable --now tailscaled
 
 ```bash
 sudo systemctl enable --now syncthing@$(whoami)
+syncthing --paths // 找到配置文件。
 ```
 
 此外因为 Syncthing 是开源软件，公共节点都是志愿者提供的，所以在穿透内网的情况下速度较慢，可以自己搭建中继。
