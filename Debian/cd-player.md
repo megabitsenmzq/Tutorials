@@ -147,6 +147,7 @@ begin
     button = KEY_MENU
     prog = irexec
     config = eject
+    ignore_first_events = 10
 end
 ```
 
