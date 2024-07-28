@@ -29,6 +29,7 @@ Pin-Priority: 90
 - ibus-mozc：日语输入法。
 - gnome-shell-extension-manager：Gnome 插件管理器。
 - pika：备份工具。
+- gdm-settings：让登录画面使用和登录后相同的 DPI 设置。
 - vlc：路障。
 - ghex：HEX 编辑器。
 - meld：文件对比工具。
@@ -60,6 +61,22 @@ Pin-Priority: 90
 
 [Toshy](https://github.com/RedBearAK/toshy): 在 Linux 上使用 macOS 的快捷键。
 
+在 Toshy 的设置文件中的 user_apps 区，添加如下配置。用于适配 Ctrl 和 Fn 与 Mac 位置相反的键盘。主要是为了方便在命令行中使用。
+此外还可以修改 Gnome 的快捷键，将切换输入法设置为 Fn + Space。
+
+```python
+keymap("User overrides general", {
+    C("Fn-C"):              C("LC-C"),
+    C("Fn-A"):              C("LC-A"),
+    C("Fn-B"):              C("LC-B"),
+    C("Fn-E"):              C("LC-E"),
+    C("Fn-F"):              C("LC-F"),
+}, when = lambda ctx:
+      cnfg.screen_has_focus and
+      matchProps(clas=termStr)(ctx)
+)
+```
+
 ### 输入法
 
 虽然说 Rime 装雾凇拼音就可以了（按 F4 切换方案）。不过因为 macOS 的使用习惯现在是 CapsLock 切中英文，所以这边也要统一一下。
@@ -86,37 +103,6 @@ cp /usr/lib/gnome-shell/libshell-12.so /usr/lib/gnome-shell/libshell-12.so.bak
 ```
 
 然后用 HEX 编辑器比如 imhex 打开。搜索 `GESTURE_FINGER_COUNT=3` 改成 4 就可以了。
-
-## 调整电源行为
-
-苹果的机器上 Debian 休眠不太好使，我直接禁用了所有自动休眠，然后把合盖休眠也去掉了。
-
-```bash
-sudo nano /etc/systemd/logind.conf
-```
-
-## 固件参数调整
-
-用 macOS 安装盘进恢复模式。
-
-### 关闭启动声音。
-
-```bash
-nvram StartupMute=%01
-```
-
-### 限制充电
-
-限制充电到 80% 可以保护电池。
-
-先打开 Safari 从 github 下载 [bclm](https://github.com/zackelia/bclm)。下载完应该会自动解压。
-
-回到命令行
-
-```bash
-./bclm write 80
-./bclm persist
-```
 
 ## 调整滚动速度
 
