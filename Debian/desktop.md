@@ -10,6 +10,19 @@
 
 ## 软件包
 
+添加 sid 到安装源，编辑 `/etc/apt/sources.list` 复制前面的行就好。
+之后将 sid 的优先级拉低。创建文件：`/etc/apt/preferences.d/unstable`，内容如下。
+
+```sh                     
+Package: *
+Pin: release a=unstable
+Pin-Priority: 90
+```
+
+90 意为非必要不安装。
+
+接下来安装常用软件包。
+
 - flatpak：不用多说，安装参见[官网说明](https://flatpak.org/setup/Debian)。
 - zram-tools：压缩内存替代部分 Swap，得到更好的内存性能。
 - ibus-rime：中文输入法，同时安装东风破(plum)和雾凇拼音方案。
