@@ -19,7 +19,7 @@ Pin: release a=unstable
 Pin-Priority: 90
 ```
 
-90 意为非必要不安装。
+90 意为非必要不安装。参见：[Apt-Pinning for Beginners](http://jaqque.sbih.org/kplug/apt-pinning.html)
 
 接下来安装常用软件包。
 
