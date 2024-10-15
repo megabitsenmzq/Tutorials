@@ -26,6 +26,7 @@ sudo ./VMware-Workstation-17.5.2-23775571.x86_64.bundle
 ```sh
 git clone -b workstation-17.5.2-k6.9+ https://github.com/nan0desu/vmware-host-modules.git
 cd vmware-host-modules
+apt-get install linux-headers-$(uname -r)
 make
 sudo make install
 ```
