@@ -21,6 +21,8 @@ Pin-Priority: 90
 
 90 意为非必要不安装。参见：[Apt-Pinning for Beginners](http://jaqque.sbih.org/kplug/apt-pinning.html)
 
+之后便可以通过 `sudo apt install xxx/unstable` 来安装了。
+
 接下来安装常用软件包。
 
 - flatpak：不用多说，安装参见[官网说明](https://flatpak.org/setup/Debian)。
