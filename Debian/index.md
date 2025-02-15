@@ -57,7 +57,7 @@ WantedBy=multi-user.target
 
 接下来创建 /etc/filebrowser/ 文件夹，用 sudo 运行一次 `filebrowser`，之后把产生的 filebrowser.db 文件 chown 改成自己的。
 
-可以用 `sudo filebrowser config set` 修改地址为 0.0.0.0 开放给局域网，也可以同时修改端口。可以用 `sudo filebrowser user add [username] [password] --perm.admin ` 命令添加一个新的 admin。
+可以用 `sudo filebrowser config set` 修改地址为 0.0.0.0 开放给局域网，也可以同时修改端口。可以用 `sudo filebrowser user add [username] [password] --perm.admin` 命令添加一个新的 admin。
 
 最后用 systemctl 启动服务就可以了。
 
