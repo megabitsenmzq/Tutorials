@@ -49,13 +49,17 @@ Group=group
 Type=simple
 Restart=on-failure
 RestartSec=5s
-ExecStart=filebrowser
+ExecStart=filebrowser -d /etc/filebrowser/filebrowser.db
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-之后用 systemctl 启动就可以了。
+接下来创建 /etc/filebrowser/ 文件夹，用 sudo 运行一次 `filebrowser`，之后把产生的 filebrowser.db 文件 chown 改成自己的。
+
+可以用 `sudo filebrowser config set` 修改地址为 0.0.0.0 开放给局域网，也可以同时修改端口。可以用 `sudo filebrowser user add [username] [password] --perm.admin ` 命令添加一个新的 admin。
+
+最后用 systemctl 启动服务就可以了。
 
 这里讲个题外话。systemd 真的是比 launchd 好用太多了。macOS 的 launchd 甚至都没办法直接看到日志，必须要指定一个输出文件才行。
 
