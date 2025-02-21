@@ -70,7 +70,7 @@ sudo apt remove --purge avahi-autoipd
 
 ## 编译 usbmuxd2
 
-这个作者写的代码只能用 clang 编，所以需要多一步。
+这个作者写的代码只能用 clang 编，所以需要多一步。编译前需要打开文件 `usbmuxd2/Muxer.cpp` 加入 `#include <algorithm>`，这是目前版本的一个 bug，之后可能会修复。
 
 ```bash
 https://github.com/tihmstar/usbmuxd2.git
