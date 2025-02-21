@@ -1,21 +1,15 @@
 # Debian 使用 libimobiledevice 实现苹果设备无线备份
 
-我个人对 iCloud 是零信任的，所以自然也不会信任 iCloud 的设备备份。在 macOS 或 Windows 上我们可以使用 iMazing 来做备份，虽然这东西要钱。而在 Linux 上，我们可以使用 libimobiledevice 来备份。这篇文章主要聚焦于无线备份，如不需要无线备份则可直接从 apt 安装 libimobiledevice 并参照下面的备份命令即可。
+我个人对 iCloud 是零信任的，因为以前出过很大问题。所以我自然也不会信任 iCloud 的设备备份。在 macOS 或 Windows 上我们可以使用 iMazing 来做备份，虽然这东西要钱而且越来越贵了。而在 Linux 上，我们可以使用 libimobiledevice 来备份。这篇文章主要聚焦于无线备份，如不需要无线备份则可直接从 apt 安装 libimobiledevice 并参照下面的备份命令即可。
 
 但是 libimobiledevice 并不完美，在 Windows 和 macOS 上，它可以正常通过无线方式连接到设备，但在 Linux 上则不工作。其原因在于使用的 usbmuxd 不支持这一功能。于是有人从头重写开发了 usbmuxd2，可以直接替换 usbmuxd 使用。
 
 ## 编译基本组件
 
-因为 Debian 的包比较老，我们需要从头编译很多东西。总之先来装依赖吧。先安装编译套件。
+因为 Debian 的包比较老，我们需要从头编译很多东西。总之先来装依赖吧。
 
 ```bash
-sudo apt-get install build-essential pkg-config checkinstall git autoconf automake libtool-bin clang
-```
-
-再安装一些需要的包和头文件。
-
-```bash
-usbmuxd avahi-utils libusbmuxd-dev libssl-dev libusb-1.0-0-dev libavahi-client-dev ibplist++-dev
+sudo apt install git build-essential autoconf automake libtool-bin pkg-config clang libssl-dev  libcurl4-openssl-dev avahi-utils
 ```
 
 然后把这四个包的源代码下载下来。
@@ -24,6 +18,7 @@ usbmuxd avahi-utils libusbmuxd-dev libssl-dev libusb-1.0-0-dev libavahi-client-d
 git clone https://github.com/libimobiledevice/libplist.git 
 git clone https://github.com/libimobiledevice/libimobiledevice-glue.git
 git clone https://github.com/tihmstar/libgeneral.git
+git clone https://github.com/libimobiledevice/libtatsu
 git clone https://github.com/libimobiledevice/libimobiledevice.git
 ```
 
@@ -40,13 +35,7 @@ sudo ldconfig
 
 ## 配置 Avahi
 
-Avahi 是用来做局域网发现的，用它可以找到网络中的 bonjour 设备。
-
-```bash
-sudo systemctl enable --now avahi-daemon.service
-```
-
-按如下所示修改配置文件 `/etc/avahi/avahi-daemon.conf`。
+Avahi 是用来做局域网发现的，用它可以找到网络中的 bonjour 设备。按如下所示修改配置文件 `/etc/avahi/avahi-daemon.conf`。
 
 ```bash
 domain-name=local # 这一行去掉注释
@@ -54,10 +43,10 @@ publish-hinfo=yes # 默认是 no
 publish-workstation=yes # 默认是 no
 ```
 
-再重启服务。
+再启动服务。
 
 ```bash
-sudo systemctl restart avahi-daemon.service
+sudo systemctl enable --now avahi-daemon.service
 ```
 
 另外虽然说咱们都已经在用 ssh 登陆了，这方面应该没问题，不过还是注意下需要装 ssh 服务器。
@@ -73,7 +62,7 @@ sudo systemctl enable --now ssh.service
 avahi-browse -a
 ```
 
-然后这里还要删除一个不太需要的后台服务，它会一直在系统日志里报错，很烦。
+然后这里还可能要删除一个不太需要的后台服务，它会一直在系统日志里报错，很烦。
 
 ```bash
 sudo apt remove --purge avahi-autoipd
@@ -92,11 +81,10 @@ sudo make install
 sudo ldconfig
 ```
 
-启动服务。因为 usbmuxd 可能已经在运行了，所以 restart 一下让他刷新状态。
+启动服务，之后可能要重启一下电脑才能读到设备。
 
 ```bash
-sudo systemctl enable usbmuxd
-sudo systemctl restart usbmuxd
+sudo systemctl start usbmuxd
 ```
 
 ## 尝试连接
@@ -131,3 +119,5 @@ idevicebackup2 还有很多的的选项，具体可以参见官方文档。
 [Untether iOS – Step by Step - Numerous Networks](https://www.numerousnetworks.co.uk/guides/untether-ios-step-by-step/)
 
 [Raspberry PiでAltServerを動かす - さおとめらいふ](https://jun3010.me/raspberrypi-altserver.html)
+
+[Automatically backup the iPhone to the Raspberry-Pi - VALINET](https://valinet.ro/2021/01/20/Automatically-backup-the-iPhone-to-the-Raspberry-Pi.html)
