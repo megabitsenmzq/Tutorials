@@ -12,7 +12,7 @@
 sudo apt install git build-essential autoconf automake libtool-bin pkg-config clang libssl-dev  libcurl4-openssl-dev avahi-utils
 ```
 
-然后把这四个包的源代码下载下来。
+然后把这五个包的源代码下载下来。
 
 ```bash
 git clone https://github.com/libimobiledevice/libplist.git 
