@@ -81,9 +81,10 @@ sudo make install
 sudo ldconfig
 ```
 
-启动服务，之后可能要重启一下电脑才能读到设备。
+重启一下。之后启动服务。
 
 ```bash
+sudo systemctl enable usbmuxd
 sudo systemctl start usbmuxd
 ```
 
