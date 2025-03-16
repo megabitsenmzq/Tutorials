@@ -138,7 +138,7 @@ sudo systemctl start fluidsynth
 除了直接用这个做音源，我还有希望能够通过 BLE 转发 USB 设备的 Midi 信号到其他设备上方便连接。首先要下载 BlueZ，由于 BlueZ 默认是没有开启 Midi 功能的，所以需要自己编译。此外这里使用的 BlueZ 是一个经过修改的版本，提供了 Midi Server 的功能。不过这个程序有一个蛮烦人的问题，那就是无法同时发送音符，也就是说弹和弦时候，声音永远都对不齐。所以这个就推荐各位自己考虑一下要不要装吧。
 
 ```
-git clone https://github.com/oxesoft/bluez
+git clone https://github.com/megabitsenmzq/bluez/
 sudo apt install -y build-essential
 sudo apt install -y autotools-dev libtool autoconf automake
 sudo apt install -y libasound2-dev
