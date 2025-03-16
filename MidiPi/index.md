@@ -219,16 +219,16 @@ nano linkble.sh
 ```sh
 #!/bin/bash
 
-CLIENT_128_ID=128
+CLIENT_ID=$(aconnect -i | grep "Midi over BLE" | cut -d':' -f1 | cut -d' ' -f2)
 
-CARD_ID=$(aconnect -i | grep "card=0" | cut -d':' -f1 | cut -d' ' -f2)
+CARD_ID=$(aconnect -i | grep "card=" | cut -d':' -f1 | cut -d' ' -f2)
 
 if [ -z "$CARD_ID" ]; then
-  echo "Error: No MIDI device found with card=0"
+  echo "Error: No MIDI device found with card="
   exit 1
 fi
 
-aconnect "$CARD_ID:0" "$CLIENT_128_ID:0"
+aconnect "$CARD_ID:0" "$CLIENT_ID:0"
 
 if [ $? -eq 0 ]; then
   echo "Successfully connected MIDI device (card=$CARD_ID:0) to client $CLIENT_128_ID:0"
@@ -237,7 +237,7 @@ else
   exit 1
 fi
 
-aconnect "$CARD_ID:1" "$CLIENT_128_ID:0"
+aconnect "$CARD_ID:1" "$CLIENT_ID:0"
 
 if [ $? -eq 0 ]; then
   echo "Successfully connected MIDI device (card=$CARD_ID:1) to client $CLIENT_128_ID:0"
