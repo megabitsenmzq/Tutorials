@@ -169,7 +169,7 @@ client 0: 'System' [type=kernel]
     1 'Announce        '
 client 14: 'Midi Through' [type=kernel]
     0 'Midi Through Port-0'
-client 20: 'Keystation 88' [type=kernel,card=1]
+client 20: 'Keystation 88' [type=kernel,card=0]
     0 'Keystation 88 MIDI 1'
     1 'Keystation 88 MIDI 2'
 client 128: 'Midi over BLE' [type=user,pid=2104]
@@ -191,11 +191,19 @@ aconnect 20:0 128:0
 ```
 [Unit]
 Description=MIDI Bluetooth connect
-After=bluetooth.target
-Requires=bluetooth.target
+After=bluetooth.target sound.target multi-user.target
+Requires=bluetooth.target sound.target
 
-[Service] 
-ExecStart=/usr/local/bin/btmidi-server -n "Midi over BLE"
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/root
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=btmidi
+Restart=always
+ExecStart=/usr/bin/btmidi-server -n "Midi over BLE"
 
 [Install]
 WantedBy=multi-user.target
@@ -216,12 +224,38 @@ chmod a+x linkble.sh
 nano linkble.sh
 ```
 
-在文件中输入：
+这个脚本会自动连接 card=0 和设备 128。
 
-```
+```sh
 #!/bin/bash
 
-/usr/bin/aconnect 'Keystation 88':0 128:0
+CLIENT_128_ID=128
+
+CARD_ID=$(aconnect -i | grep "card=0" | cut -d':' -f1 | cut -d' ' -f2)
+
+if [ -z "$CARD_ID" ]; then
+  echo "Error: No MIDI device found with card=0"
+  exit 1
+fi
+
+aconnect "$CARD_ID:0" "$CLIENT_128_ID:0"
+
+if [ $? -eq 0 ]; then
+  echo "Successfully connected MIDI device (card=$CARD_ID:0) to client $CLIENT_128_ID:0"
+else
+  echo "Error: Failed to connect MIDI device to client $CLIENT_128_ID:0"
+  exit 1
+fi
+
+aconnect "$CARD_ID:1" "$CLIENT_128_ID:0"
+
+if [ $? -eq 0 ]; then
+  echo "Successfully connected MIDI device (card=$CARD_ID:1) to client $CLIENT_128_ID:0"
+else
+  echo "Warning: Could not connect MIDI device card=$CARD_ID:1, likely only one port"
+fi
+
+exit 0
 ```
 
 注意这里要把键盘的名字改成自己的。之所以要用设备名来连接，是因为设备编号是不稳定的。接下来建立规则 `sudo nano /etc/udev/rules.d/44-bt.rules`,在文件中输入：
@@ -343,6 +377,7 @@ sudo systemctl start raveloxmidi.service
 参考文章：
 
 - [Using a Raspberry Pi as a RTP-MIDI Gateway for macOS](https://blog.tarn-vedra.de/pimidi-box/)
+- [Raspberry Pi as USB/Bluetooth MIDI host](https://neuma.studio/raspberry-pi-as-usb-bluetooth-midi-host/)
 
 ## 后记
 
