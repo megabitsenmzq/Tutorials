@@ -10,7 +10,7 @@
 
 橘子派能安装的最新版本 Armbian 内核关闭了 Midi 功能。在各种论坛研究一圈之后，发现旧版本的 Armbian 内核是开了的，于是我下载了使用旧版内核的系统。
 
-（注意使用旧版本系统仅限于本教程前半部分 USB Midi 设备，假如你需要配置蓝牙 Midi，则必须自己编译新内核。请自己 Google 如何编译 Armbian，在编译选项中开启：Device Drivers > Sound card support > Advanced Linux Sound Architecture > Sequencer Support )
+（注意使用旧版本系统仅限于本教程前半部分 USB Midi 设备，假如你需要配置蓝牙 Midi，则必须自己编译新内核。可自己 Google 如何编译 Armbian，在编译选项中开启：Device Drivers > Sound card support > Advanced Linux Sound Architecture > Sequencer Support )。参考 [How to Compile Armbian: Step-by-Step Tutorial for Beginners](https://www.youtube.com/watch?v=Fg966ivZlrc) 和 [Armbian - using kernel-config](https://zuckerbude.org/armbian-using-kernel-config/)。
 
 进去之后正常更新系统，旧版镜像要久一点。橘子派还需要在系统中启用声音，使用自带的配置工具 `sudo armbian-config`，启用 System > Hardware > Toggle hardware configuration > analog-codec 。
 
