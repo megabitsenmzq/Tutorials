@@ -364,6 +364,14 @@ sudo systemctl start raveloxmidi.service
 
 （本节参阅：[Github](https://github.com/ravelox/pimidi/blob/master/FAQ.md)）
 
+## 锁定文件系统
+
+用 `armbian-config` 就可以使文件系统只读，但需要额外安装 buzybox，要么会报错不好使。
+
+```sh
+apt install busybox-static
+```
+
 参考文章：
 
 - [Using a Raspberry Pi as a RTP-MIDI Gateway for macOS](https://blog.tarn-vedra.de/pimidi-box/)
