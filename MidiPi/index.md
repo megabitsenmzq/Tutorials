@@ -364,15 +364,6 @@ sudo systemctl start raveloxmidi.service
 
 （本节参阅：[Github](https://github.com/ravelox/pimidi/blob/master/FAQ.md)）
 
-## 锁定文件系统
-
-因为这开发板我就是拿来干这个的，锁定文件系统就能随便断电也不用担心不稳定了。
-
-```sh
-apt-get install overlayroot
-echo 'overlayroot="tmpfs"' >> /etc/overlayroot.conf
-```
-
 参考文章：
 
 - [Using a Raspberry Pi as a RTP-MIDI Gateway for macOS](https://blog.tarn-vedra.de/pimidi-box/)
