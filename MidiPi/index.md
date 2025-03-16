@@ -16,7 +16,7 @@
 
 橘子派可能会等待网络服务激活后才进入系统，导致开机时间非常长，使用下面的命令关闭它：
 
-```
+```sh
 sudo systemctl disable NetworkManager-wait-online
 ```
 
@@ -28,14 +28,15 @@ Debian 源中自带的 FluidSynth 版本比较低，是 1.x 的。由于旧版�
 
 为了安装依赖，我们先要调整 apt 源,在文件中取消几个 deb-src 源前面的注释。
 
-```
+
+```sh
 sudo nano /etc/apt/sources.list
 sudo apt-get update
 ```
 
 安装所有需要的依赖包然后编译。
 
-```
+```sh
 sudo apt-get build-dep fluidsynth --no-install-recommends
 git clone https://github.com/FluidSynth/fluidsynth
 cd fluidsynth/
@@ -47,13 +48,13 @@ sudo make install
 
 接下来在命令行中执行 fluidsynth 确认是否正常。如果出现了找不到库的情况的话，首先应该尝试更新链接库。
 
-```
+```sh
 sudo ldconfig
 ```
 
 如果这样不行的话，可以添加环境变量。（下面的代码是临时的，永久修改可以自己 Google 一下。）
 
-```
+```sh
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 ```
 
@@ -72,7 +73,7 @@ FluidSynth 支持 SF2/SF3 格式的音源文件，不支持 SFZ，请注意不�
 
 先运行一次测试是否能够正常出声，这里我使用了 GM 音源。建议先用 `alsamixer` 把声音调大一点。
 
-```
+```sh
 fluidsynth -is -a alsa -m alsa_seq -o midi.autoconnect=1
 ```
 
@@ -91,7 +92,7 @@ fluidsynth -is -a alsa -m alsa_seq -o midi.autoconnect=1
 
 为了能够让 FluidSynth 开机启动我们需要自己写一个服务：`sudo nano /etc/systemd/system/fluidsynth.service`。在文件中输入：
 
-```
+```sh
 [Unit]
 Description=FluidSynth Daemon
 After=sound.target
@@ -111,7 +112,7 @@ WantedBy=multi-user.target
 
 激活服务：
 
-```
+```sh
 sudo systemctl enable --now fluidsynth
 ```
 
@@ -126,7 +127,7 @@ sudo systemctl enable --now fluidsynth
 
 除了直接用这个做音源，我还有希望能够通过 BLE 转发 USB 设备的 Midi 信号到其他设备上方便连接。首先要下载 BlueZ，由于 BlueZ 默认是没有开启 Midi 功能的，所以需要自己编译。此外这里使用的 BlueZ 是一个经过修改的版本，提供了 Midi Server 的功能。不过这个程序有一个蛮烦人的问题，那就是无法同时发送音符，也就是说弹和弦时候，声音永远都对不齐。所以这个就推荐各位自己考虑一下要不要装吧。
 
-```
+```sh
 git clone https://github.com/megabitsenmzq/bluez/
 sudo apt install -y build-essential
 sudo apt install -y autotools-dev libtool autoconf automake
@@ -140,19 +141,19 @@ sudo make install
 
 之后测试一下开启服务端并用其他支持 Bluetooth Midi 的软件来搜索，如 iOS 下的 Garageband。
 
-```
+```sh
 sudo btmidi-server -v -n "Midi over BLE"
 ```
 
 如果出现了 `MGMT_OP_SET_LE failed: Not Supported`，就说明设备不支持 BLE。在确认一切正常后打开另外一个终端窗口，连接好 Midi 设备并扫描。注意在这之前要先用别的设备连接上 Bluetooth Midi，BlueZ 只有在有设备连接时才会创建 Midi 通道。
 
-```
+```sh
 aconnect -l
 ```
 
 在列表中找到你自己的蓝牙设备和创建的 "Midi over BLE"。比如我的输出结果是：
 
-```
+```sh
 client 0: 'System' [type=kernel]
     0 'Timer           '
     1 'Announce        '
@@ -167,7 +168,7 @@ client 128: 'Midi over BLE' [type=user,pid=2104]
 
 这里可以看到我的键盘 "Keystation 88" 编号是 20，"Midi over BLE" 默认编号是 128。 
 
-```
+```sh
 aconnect 20:0 128:0 
 ```
 
@@ -177,7 +178,7 @@ aconnect 20:0 128:0
 
 新建一个服务：`sudo nano /lib/systemd/system/btmidi.service`，在文件中输入：
 
-```
+```sh
 [Unit]
 Description=MIDI Bluetooth connect
 After=bluetooth.target sound.target multi-user.target
@@ -200,14 +201,14 @@ WantedBy=multi-user.target
 
 激活服务：
 
-```
+```sh
 sudo systemctl enable btmidi.service
 sudo systemctl start btmidi.service  
 ```
 
 接下来配置自动连接 Midi 通道，这里我们使用 udev 来在蓝牙设备发生变化时自动连接。首先来写一个连接脚本：
 
-```
+```sh
 touch linkble.sh
 chmod a+x linkble.sh
 nano linkble.sh
@@ -249,13 +250,13 @@ exit 0
 
 注意这里要把键盘的名字改成自己的。之所以要用设备名来连接，是因为设备编号是不稳定的。接下来建立规则 `sudo nano /etc/udev/rules.d/44-bt.rules`,在文件中输入：
 
-```
+```sh
 ACTION=="add|remove", SUBSYSTEM=="bluetooth", RUN+="/home/user-name/linkble.sh"
 ```
 
 刷新规则：
 
-```
+```sh
 sudo udevadm control --reload-rules
 ```
 
@@ -270,14 +271,14 @@ sudo udevadm control --reload-rules
 
 首先需要激活虚拟 Midi 设备模块。
 
-```
+```sh
 modprobe snd-virmidi
 aconnect -l
 ```
 
 如果输出中出现了几个虚拟 Midi 设备就说明设置成功了。为了能让模块永久启用，我们来建立一个配置文件 `sudo nano /etc/modules-load.d/snd-virmidi.conf`，在文件中输入：
 
-```
+```sh
 snd-virmidi
 ```
 
@@ -285,7 +286,7 @@ snd-virmidi
 
 接下来安装 raveloxmidi：
 
-```
+```sh
 sudo apt-get install -y git pkg-config libasound2-dev libavahi-client-dev autoconf automake
 sudo apt-get install avahi-daemon
 git clone -b experimental https://github.com/ravelox/pimidi.git
@@ -295,7 +296,7 @@ sudo make install
 
 假如你的网络不支持 ipv6，就需要配置一下 avahi-daemon，打开文件：`sudo nano /etc/avahi/avahi-daemon.conf`，按照下面的值来设置，注意一些行需要取消注释。
 
-```
+```sh
 use-ipv6=no
 publish-addresses=yes
 publish-aaaa-on-ipv4=no
@@ -303,19 +304,19 @@ publish-aaaa-on-ipv4=no
 
 接下来查看可用的设备编号：
 
-```
+```sh
 amidi -l
 ```
 
 打开 `aconnect -l` 来看一下设备在其中的编号，看一下 Midi 键盘的编号和第一个虚拟设备的编号，我的是 28:0 24:0，把它们连接起来。注意这里的顺序，一定是把键盘通道发送给虚拟设备通道。
 
-```
+```sh
 aconnect 28:0 24:0
 ```
 
 我这里第一个虚拟 Midi 设备的编号是 hw:2,0，记住这个值。为 raveloxmidi 建立一个配置文件：`/etc/raveloxmidi.conf`，在文件中输入：
 
-```
+```sh
 alsa.input_device = hw:2,0
 network.bind_address = 0.0.0.0
 logging.enabled = yes
@@ -324,7 +325,7 @@ logging.log_level = normal
 
 接下来启动测试：
 
-```
+```sh
 sudo raveloxmidi -dN -c /etc/raveloxmidi.conf
 ```
 
@@ -338,7 +339,7 @@ sudo raveloxmidi -dN -c /etc/raveloxmidi.conf
 
 新建一个服务：`sudo nano /etc/systemd/system/raveloxmidi.service`，在文件中输入：
 
-```
+```sh
 [Unit]
 After=local-fs.target network.target
 Description=raveloxmidi RTP-MIDI network server
@@ -354,7 +355,7 @@ ExecStart=/usr/local/bin/raveloxmidi -dN -c /etc/raveloxmidi.conf
 
 注意 Midi 设备的名称要改成自己的。激活服务：
 
-```
+```sh
 sudo systemctl enable raveloxmidi.service
 sudo systemctl start raveloxmidi.service
 ```
@@ -362,6 +363,15 @@ sudo systemctl start raveloxmidi.service
 服务没有启动成功也没关系，可能是因为我们之前已经手动连接过一次 Midi 设备了，重启试试就好。
 
 （本节参阅：[Github](https://github.com/ravelox/pimidi/blob/master/FAQ.md)）
+
+## 锁定文件系统
+
+因为这开发板我就是拿来干这个的，锁定文件系统就能随便断电也不用担心不稳定了。
+
+```sh
+apt-get install overlayroot
+echo 'overlayroot="tmpfs"' >> /etc/overlayroot.conf
+```
 
 参考文章：
 
