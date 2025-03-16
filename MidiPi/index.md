@@ -66,14 +66,14 @@ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
 如果你尝试过直接用 apt 安装 FluidSynth 的话，你应该会看到它推荐的几个包：fluidr3mono-gm-soundfont、timgm6mb-soundfont、fluid-soundfont-gm。这些都是 Sound Font。但是他们可能不够好听，并不能达到你的要求，这时候你就可以去一些第三方网站下载，比如 [SoundFont4U](https://sites.google.com/site/soundfonts4u/)。
 
-FluidSynth 支持 SF2/SF3 格式的音源文件，不支持 SFZ，请注意不要搞错。自己下载的音源可以存到一个叫 sound-fonts 的文件夹下备用，使用 apt 安装的上述几个音源则安装在 /usr/share/sounds/sf2 文件夹下。
+FluidSynth 支持 SF2/SF3 格式的音源文件，不支持 SFZ，请注意不要搞错。将下载的音源复制为 `/usr/local/share/soundfonts/default.sf2` 即可使用。
 
 ## 测试声音
 
-先运行一次测试是否能够正常出声，这里我使用了 GM 音源。
+先运行一次测试是否能够正常出声，这里我使用了 GM 音源。建议先用 `alsamixer` 把声音调大一点。
 
 ```
-fluidsynth -is -a alsa -m alsa_seq -g 5 -o midi.autoconnect=1 /usr/share/sounds/sf2/FluidR3_GM.sf2
+fluidsynth -is -a alsa -m alsa_seq -o midi.autoconnect=1
 ```
 
 解释一下参数：
@@ -97,8 +97,7 @@ Description=FluidSynth Daemon
 After=sound.target
 
 [Service]
-EnvironmentFile=/etc/fluidsynth
-ExecStart=/usr/local/bin/fluidsynth -is -a alsa -m alsa_seq -z 64 -c 2 -g $GAIN -o synth.cpu-cores=4 -o midi.autoconnect=1 ${FONT_PATH}
+ExecStart=/usr/local/bin/fluidsynth -is -a alsa -m alsa_seq -z 64 -c 2 -g 1 -o synth.cpu-cores=4 -o midi.autoconnect=1
 
 [Install]
 WantedBy=multi-user.target
@@ -110,20 +109,10 @@ WantedBy=multi-user.target
 - c 缓存个数，一般为 2 或 3。
 - o 多了一个设置 CPU 核心数的选项 synth.cpu-cores，你可以根据自己的开发板来设置。可以装一个 htop 数条条看几个核。
 
-文件中还把音源文件名和力度放在了环境文件中方便设置。新建环境文件：`sudo nano /etc/fluidsynth`，在文件中输入：
-
-```
-FONT_PATH=/home/megabits/sound-fonts/SalC5Light2.sf2
-GAIN=1.5
-```
-
-这个应该就不用我太多解释了。这里将力度设置为 1.5 是我试出来在橘子派上比较合适的音量，你可以自己调。假如你的 Midi 键盘有音量滑杆那就更方便了。
-
 激活服务：
 
 ```
-sudo systemctl enable fluidsynth
-sudo systemctl start fluidsynth
+sudo systemctl enable --now fluidsynth
 ```
 
 之后理论上就应该能正常弹琴了。假如听不到声音，可以用 `journalctl -u fluidsynth` 来查看服务的日志，看看是出了什么问题。如果你只需要用 USB 来连接一下 Midi 设备的话，下面就可以不用看了。
