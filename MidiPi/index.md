@@ -12,9 +12,9 @@
 
 （注意使用旧版本系统仅限于本教程前半部分 USB Midi 设备，假如你需要配置蓝牙 Midi，则必须自己编译新内核。可自己 Google 如何编译 Armbian，在编译选项中开启：Device Drivers > Sound card support > Advanced Linux Sound Architecture > Sequencer Support )。参考 [How to Compile Armbian: Step-by-Step Tutorial for Beginners](https://www.youtube.com/watch?v=Fg966ivZlrc) 和 [Armbian - using kernel-config](https://zuckerbude.org/armbian-using-kernel-config/)。
 
-进去之后正常更新系统，旧版镜像要久一点。橘子派还需要在系统中启用声音，使用自带的配置工具 `sudo armbian-config`，启用 System > Hardware > Toggle hardware configuration > analog-codec 。
+进去之后正常更新系统，旧版镜像要久一点。橘子派还需要在系统中启用声音，使用自带的配置工具 `sudo armbian-config`，启用 System > Kernel > SY210 - Manage device tree overlays > analog-codec 。
 
-由于橘子派会等待网络服务激活后才进入系统，导致开机时间非常长，使用下面的命令关闭它：
+橘子派可能会等待网络服务激活后才进入系统，导致开机时间非常长，使用下面的命令关闭它：
 
 ```
 sudo systemctl disable NetworkManager-wait-online
