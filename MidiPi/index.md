@@ -145,7 +145,7 @@ sudo apt install -y libasound2-dev
 sudo apt install -y libusb-dev libdbus-1-dev libglib2.0-dev libudev-dev libical-dev libreadline-dev
 cd bluez
 ./bootstrap
-./configure --enable-midi
+./configure --enable-midi --prefix=/usr --mandir=/usr/share/man --sysconfdir=/etc --localstatedir=/var
 sudo make install
 ```
 
