@@ -1,38 +1,16 @@
 # 桌面环境备忘录
 
-之前我写文章介绍了我的 Debian 服务器配置。此外我还有一台装了 Debian 的 MBP。这里整理一下这台 MBP 安装时的要点作为自己的笔记，说明会比较随便。
+最近用 M1 Air 安装了 Asahi Linux，桌面主力从 Debian 转到了 Fedora。所以更新一下这篇文章。
 
-## 硬件驱动
-
-参见：[State of Linux on the MacBook Pro 2016 & 2017](https://github.com/Dunedan/mbp-2016-linux)。
-
-不过主要来讲就是一个[声卡](https://github.com/davidjo/snd_hda_macbookpro)，一个[蓝牙](https://github.com/leifliddy/macbook12-bluetooth-driver)。声卡半残，休眠就废。蓝牙倒是没什么大问题。
-
-## 软件包
-
-添加 sid 到安装源，编辑 `/etc/apt/sources.list` 复制前面的行就好。
-之后将 sid 的优先级拉低。创建文件：`/etc/apt/preferences.d/unstable`，内容如下。
-
-```sh                     
-Package: *
-Pin: release a=unstable
-Pin-Priority: 90
-```
-
-90 意为非必要不安装。参见：[Apt-Pinning for Beginners](http://jaqque.sbih.org/kplug/apt-pinning.html)
-
-之后便可以通过 `sudo apt install xxx/unstable` 来安装了。
+从 FlatPak 安装：
+- Extension Manager
+- dconf Editor
 
 接下来安装常用软件包。
 
-- flatpak：不用多说，安装参见[官网说明](https://flatpak.org/setup/Debian)。
-- zram-tools：压缩内存替代部分 Swap，得到更好的内存性能。
 - ibus-rime：中文输入法，同时安装东风破(plum)和雾凇拼音方案。
 - ibus-mozc：日语输入法。
-- gnome-shell-extension-manager：Gnome 插件管理器。
-- pika：备份工具。
-- gdm-settings：让登录画面使用和登录后相同的 DPI 设置。
-- vlc：路障。
+- vlc：路障。（或者 mpv）
 - ghex：HEX 编辑器。
 - meld：文件对比工具。
 - gear-lever：App Image 管理工具。
@@ -63,32 +41,9 @@ Pin-Priority: 90
 
 [Toshy](https://github.com/RedBearAK/toshy): 在 Linux 上使用 macOS 的快捷键。
 
-### 输入法
-
-虽然说 Rime 装雾凇拼音就可以了（按 F4 切换方案）。不过因为 macOS 的使用习惯现在是 CapsLock 切中英文，所以这边也要统一一下。
-
-打开 Rime 的设置，应该在 `~/.config/ibus/rime/default.yaml`。找到切换的部分，改成下面这样就可以了。
-
-```bash
-ascii_composer:
-  good_old_caps_lock: false # 这里改成 false
-  switch_key:
-    Caps_Lock: commit_code # 这里改成 commit_code
-    Shift_L: noop # 这里改成 noop
-    ... 
-```
-
 ### 修改手势
 
-Gnome 默认的打开 Launcher 的手势是三指，但是 macOS 上四指五指都是有反应的，我自己平时是用四指，所以这里也要改一下。
-
-先备份原文件。
-
-```bash
-cp /usr/lib/gnome-shell/libshell-12.so /usr/lib/gnome-shell/libshell-12.so.bak
-```
-
-然后用 HEX 编辑器比如 imhex 打开。搜索 `GESTURE_FINGER_COUNT=3` 改成 4 就可以了。
+关闭 Tap to Click。
 
 ## 调整滚动速度
 
