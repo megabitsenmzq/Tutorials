@@ -32,6 +32,8 @@
 - Burn My Windows：窗口开关特效。
 - Focused Window D-Bus：给其他程序提供接口。
 - TailScale-QS：TailScale 开关。
+- Battery Health Charging：限制只充 80%
+
 
 ## 美化
 
