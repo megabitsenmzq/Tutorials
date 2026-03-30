@@ -6,7 +6,7 @@ https://github.com/vinceliuice/Graphite-kde-theme
 
 https://github.com/luisbocanegra/plasma-panel-colorizer
 
-https://store.kde.org/p/1220174
+https://store.kde.org/p/2036820
 
 ## sddm
 
