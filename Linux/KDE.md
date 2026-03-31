@@ -2,6 +2,8 @@
 
 https://github.com/paulmcauley/klassy
 
+https://github.com/vinceliuice/Fluent-icon-theme
+
 https://github.com/vinceliuice/Graphite-kde-theme
 
 https://github.com/luisbocanegra/plasma-panel-colorizer
